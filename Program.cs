@@ -2,6 +2,8 @@ using Bangazon.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Net.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +45,65 @@ app.MapGet("/api/categories", (BangazonDbContext db) =>
 app.MapGet("/api/paymenttypes", (BangazonDbContext db) =>
 {
     return db.PaymentType.ToList();
+});
+
+// GET USERS
+app.MapGet("/api/users", (BangazonDbContext db) =>
+{
+    return db.Users.ToList();
+});
+
+// GET USERS BY ID
+app.MapGet("/api/users/{id}", (BangazonDbContext db, int id) =>
+{
+    var user = db.Users.SingleOrDefault(u => u.Id == id);
+
+    if (user == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(user);
+});
+
+// CREATE USERS
+app.MapPost("/api/users", (BangazonDbContext db, User user) =>
+{
+    db.Users.Add(user);
+    db.SaveChanges();
+    return Results.Created($"/api/user/{user.Id}", user);
+});
+
+// UPDATE USERS
+app.MapPut("/api/user/{id}", (BangazonDbContext db, User user, int id) =>
+{
+    var updateUser = db.Users.SingleOrDefault(u => u.Id == id);
+    if (updateUser == null)
+    {
+        return Results.NotFound();
+    }
+    updateUser.UserName = user.UserName;
+    updateUser.FirstName = user.FirstName;
+    updateUser.LastName = user.LastName;
+    updateUser.Email = user.Email;
+    updateUser.Address = user.Address;
+    updateUser.IsSeller = user.IsSeller;
+    db.SaveChanges();
+    return Results.Ok(updateUser);
+
+});
+
+// DELETE USERS
+app.MapDelete("/api/users/{id}", (BangazonDbContext db, int id) =>
+{
+    var deleteUser = db.Users.SingleOrDefault(u => u.Id == id);
+    if (deleteUser == null)
+    {
+        return Results.NotFound();
+    }
+    db.Users.Remove(deleteUser);
+    db.SaveChanges();
+    return Results.Ok(deleteUser);
 });
 
 app.Run();
