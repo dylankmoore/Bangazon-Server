@@ -2,7 +2,7 @@
 
 namespace Bangazon.Models
 {
-    public class Orders
+    public class Order
     {
         public int Id { get; set; }
         [Required]
@@ -10,6 +10,6 @@ namespace Bangazon.Models
         public bool IsOpen { get; set; }
         public int PaymentTypeId { get; set; }
         public DateTime DateCreated { get; set; }
-        public ICollection<Products> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

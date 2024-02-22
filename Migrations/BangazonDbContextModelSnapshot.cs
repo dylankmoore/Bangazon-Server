@@ -21,7 +21,7 @@ namespace Bangazon.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Bangazon.Models.Categories", b =>
+            modelBuilder.Entity("Bangazon.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace Bangazon.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Bangazon.Models.Orders", b =>
+            modelBuilder.Entity("Bangazon.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,7 +89,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            DateCreated = new DateTime(2024, 2, 21, 18, 24, 8, 654, DateTimeKind.Local).AddTicks(9783),
+                            DateCreated = new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5308),
                             IsOpen = true,
                             PaymentTypeId = 1
                         },
@@ -97,7 +97,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 2,
                             CustomerId = 2,
-                            DateCreated = new DateTime(2024, 2, 21, 18, 24, 8, 654, DateTimeKind.Local).AddTicks(9838),
+                            DateCreated = new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5352),
                             IsOpen = true,
                             PaymentTypeId = 2
                         },
@@ -105,7 +105,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 3,
                             CustomerId = 3,
-                            DateCreated = new DateTime(2024, 2, 21, 18, 24, 8, 654, DateTimeKind.Local).AddTicks(9840),
+                            DateCreated = new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5354),
                             IsOpen = false,
                             PaymentTypeId = 3
                         },
@@ -113,7 +113,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 4,
                             CustomerId = 4,
-                            DateCreated = new DateTime(2024, 2, 21, 18, 24, 8, 654, DateTimeKind.Local).AddTicks(9841),
+                            DateCreated = new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5424),
                             IsOpen = true,
                             PaymentTypeId = 4
                         });
@@ -158,7 +158,7 @@ namespace Bangazon.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Bangazon.Models.Products", b =>
+            modelBuilder.Entity("Bangazon.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,7 +178,7 @@ namespace Bangazon.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
                     b.Property<int>("SellerId")
@@ -193,7 +193,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            Description = "Personal essays",
+                            Description = "Book of personal essays",
                             ImageURL = "https://m.media-amazon.com/images/I/41fm2uwWJUL._SY445_SX342_.jpg",
                             Name = "The White Album by Joan Didion",
                             Price = 13m,
@@ -231,7 +231,7 @@ namespace Bangazon.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Bangazon.Models.Users", b =>
+            modelBuilder.Entity("Bangazon.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,6 +248,7 @@ namespace Bangazon.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FirebaseKey")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
@@ -284,9 +285,9 @@ namespace Bangazon.Migrations
                         new
                         {
                             Id = 2,
-                            Address = "3959 Longridge Ave Sherman Oaks, CA",
+                            Address = "3959 Longridge Ave, Sherman Oaks, CA",
                             Email = "kelltaylor@hotmail.com",
-                            FirebaseKey = "key2",
+                            FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2",
                             FirstName = "Kelly",
                             IsSeller = true,
                             LastName = "Taylor",
@@ -297,7 +298,7 @@ namespace Bangazon.Migrations
                             Id = 3,
                             Address = "1605 E. Altadena Dr, Altadena, CA",
                             Email = "dmckay74@aol.com",
-                            FirebaseKey = "key3",
+                            FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2",
                             FirstName = "Dylan",
                             IsSeller = false,
                             LastName = "McKay",
@@ -306,9 +307,9 @@ namespace Bangazon.Migrations
                         new
                         {
                             Id = 4,
-                            Address = "1060 Brooklawn Dr., Bel Air CA",
+                            Address = "1060 Brooklawn Dr., Bel Air, CA",
                             Email = "dmartin@gmail.com",
-                            FirebaseKey = "key4",
+                            FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2",
                             FirstName = "Donna",
                             IsSeller = false,
                             LastName = "Martin",
@@ -316,7 +317,7 @@ namespace Bangazon.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OrdersProducts", b =>
+            modelBuilder.Entity("OrderProduct", b =>
                 {
                     b.Property<int>("OrdersId")
                         .HasColumnType("integer");
@@ -328,18 +329,18 @@ namespace Bangazon.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("OrdersProducts");
+                    b.ToTable("OrderProduct");
                 });
 
-            modelBuilder.Entity("OrdersProducts", b =>
+            modelBuilder.Entity("OrderProduct", b =>
                 {
-                    b.HasOne("Bangazon.Models.Orders", null)
+                    b.HasOne("Bangazon.Models.Order", null)
                         .WithMany()
                         .HasForeignKey("OrdersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bangazon.Models.Products", null)
+                    b.HasOne("Bangazon.Models.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
