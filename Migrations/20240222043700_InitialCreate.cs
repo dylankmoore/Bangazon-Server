@@ -63,7 +63,7 @@ namespace Bangazon.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     ImageURL = table.Column<string>(type: "text", nullable: true),
-                    Price = table.Column<decimal>(type: "numeric", nullable: true)
+                    Price = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,7 +76,7 @@ namespace Bangazon.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirebaseKey = table.Column<string>(type: "text", nullable: true),
+                    FirebaseKey = table.Column<string>(type: "text", nullable: false),
                     UserName = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
@@ -90,7 +90,7 @@ namespace Bangazon.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrdersProducts",
+                name: "OrderProduct",
                 columns: table => new
                 {
                     OrdersId = table.Column<int>(type: "integer", nullable: false),
@@ -98,15 +98,15 @@ namespace Bangazon.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrdersProducts", x => new { x.OrdersId, x.ProductsId });
+                    table.PrimaryKey("PK_OrderProduct", x => new { x.OrdersId, x.ProductsId });
                     table.ForeignKey(
-                        name: "FK_OrdersProducts_Orders_OrdersId",
+                        name: "FK_OrderProduct_Orders_OrdersId",
                         column: x => x.OrdersId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrdersProducts_Products_ProductsId",
+                        name: "FK_OrderProduct_Products_ProductsId",
                         column: x => x.ProductsId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -129,10 +129,10 @@ namespace Bangazon.Migrations
                 columns: new[] { "Id", "CustomerId", "DateCreated", "IsOpen", "PaymentTypeId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 2, 21, 18, 24, 8, 654, DateTimeKind.Local).AddTicks(9783), true, 1 },
-                    { 2, 2, new DateTime(2024, 2, 21, 18, 24, 8, 654, DateTimeKind.Local).AddTicks(9838), true, 2 },
-                    { 3, 3, new DateTime(2024, 2, 21, 18, 24, 8, 654, DateTimeKind.Local).AddTicks(9840), false, 3 },
-                    { 4, 4, new DateTime(2024, 2, 21, 18, 24, 8, 654, DateTimeKind.Local).AddTicks(9841), true, 4 }
+                    { 1, 1, new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5308), true, 1 },
+                    { 2, 2, new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5352), true, 2 },
+                    { 3, 3, new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5354), false, 3 },
+                    { 4, 4, new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5424), true, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -151,7 +151,7 @@ namespace Bangazon.Migrations
                 columns: new[] { "Id", "CategoryId", "Description", "ImageURL", "Name", "Price", "SellerId" },
                 values: new object[,]
                 {
-                    { 1, 1, "Personal essays", "https://m.media-amazon.com/images/I/41fm2uwWJUL._SY445_SX342_.jpg", "The White Album by Joan Didion", 13m, 1 },
+                    { 1, 1, "Book of personal essays", "https://m.media-amazon.com/images/I/41fm2uwWJUL._SY445_SX342_.jpg", "The White Album by Joan Didion", 13m, 1 },
                     { 2, 2, "Audio CD", "https://m.media-amazon.com/images/I/71rRNAnVW6L._SL1400_.jpg", "Badmotorfinger by Soundgarden", 10m, 2 },
                     { 3, 4, "Guessing Game", "https://m.media-amazon.com/images/I/81MBgtB-Y8L._AC_SL1500_.jpg", "Taboo", 14m, 3 },
                     { 4, 4, "Multi-colored cutting board", "https://fredericksandmae.com/cdn/shop/products/0511_1296x.jpg?v=1631229005", "Confetti Cutting Board", 70m, 4 }
@@ -163,14 +163,14 @@ namespace Bangazon.Migrations
                 values: new object[,]
                 {
                     { 1, "1675 E Altadena Dr, Altadena, CA", "brandonwalsh74@gmail.com", "npAVsfejgPZyg1q0OEKHq6l9zur2", "Brandon", false, "Walsh", "branman" },
-                    { 2, "3959 Longridge Ave Sherman Oaks, CA", "kelltaylor@hotmail.com", "key2", "Kelly", true, "Taylor", "kells90210" },
-                    { 3, "1605 E. Altadena Dr, Altadena, CA", "dmckay74@aol.com", "key3", "Dylan", false, "McKay", "dmckay" },
-                    { 4, "1060 Brooklawn Dr., Bel Air CA", "dmartin@gmail.com", "key4", "Donna", false, "Martin", "donnaloves2shop" }
+                    { 2, "3959 Longridge Ave, Sherman Oaks, CA", "kelltaylor@hotmail.com", "npAVsfejgPZyg1q0OEKHq6l9zur2", "Kelly", true, "Taylor", "kells90210" },
+                    { 3, "1605 E. Altadena Dr, Altadena, CA", "dmckay74@aol.com", "npAVsfejgPZyg1q0OEKHq6l9zur2", "Dylan", false, "McKay", "dmckay" },
+                    { 4, "1060 Brooklawn Dr., Bel Air, CA", "dmartin@gmail.com", "npAVsfejgPZyg1q0OEKHq6l9zur2", "Donna", false, "Martin", "donnaloves2shop" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrdersProducts_ProductsId",
-                table: "OrdersProducts",
+                name: "IX_OrderProduct_ProductsId",
+                table: "OrderProduct",
                 column: "ProductsId");
         }
 
@@ -180,7 +180,7 @@ namespace Bangazon.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "OrdersProducts");
+                name: "OrderProduct");
 
             migrationBuilder.DropTable(
                 name: "PaymentType");

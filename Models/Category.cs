@@ -2,9 +2,9 @@
 
 namespace Bangazon.Models;
 
-public class Categories
+public class Category
 {
     public int Id { get; set; }
     [Required]
-    public string ? Name { get; set; }
+    public string Name { get; set; }
 }
