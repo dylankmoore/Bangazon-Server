@@ -39,5 +39,10 @@ app.MapGet("/api/categories", (BangazonDbContext db) =>
     return db.Categories.ToList();
 });
 
+// GET PAYMENT TYPES
+app.MapGet("/api/paymenttypes", (BangazonDbContext db) =>
+{
+    return db.PaymentType.ToList();
+});
 
 app.Run();
