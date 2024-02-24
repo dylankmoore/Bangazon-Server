@@ -7,6 +7,7 @@ using System.Net.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -104,6 +105,63 @@ app.MapDelete("/api/users/{id}", (BangazonDbContext db, int id) =>
     db.Users.Remove(deleteUser);
     db.SaveChanges();
     return Results.Ok(deleteUser);
+});
+
+// GET PRODUCTS
+app.MapGet("/api/products", (BangazonDbContext db) =>
+{
+    return db.Products.ToList();
+});
+
+// GET PRODUCTS BY ID
+app.MapGet("/api/products/{id}", (BangazonDbContext db, int id) =>
+{
+    var product = db.Products.SingleOrDefault(u => u.Id == id);
+
+    if (product == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(product);
+});
+
+// CREATE PRODUCT
+app.MapPost("/api/products", (BangazonDbContext db, Product product) =>
+{
+    db.Products.Add(product);
+    db.SaveChanges();
+    return Results.Created($"/api/products/{product.Id}", product);
+});
+
+// UPDATE PRODUCT
+app.MapPut("/api/products/{id}", (BangazonDbContext db, Product product, int id) =>
+{
+    var updateProduct = db.Products.SingleOrDefault(u => u.Id == id);
+    if (updateProduct == null)
+    {
+        return Results.NotFound();
+    }
+    updateProduct.Name = product.Name;
+    updateProduct.Description = product.Description;
+    updateProduct.ImageURL = product.ImageURL;
+    updateProduct.Price = product.Price;
+    db.SaveChanges();
+    return Results.Ok(updateProduct);
+
+});
+
+// DELETE PRODUCT
+app.MapDelete("/api/products/{id}", (BangazonDbContext db, int id) =>
+{
+    var deleteProduct = db.Products.SingleOrDefault(u => u.Id == id);
+    if (deleteProduct == null)
+    {
+        return Results.NotFound();
+    }
+    db.Products.Remove(deleteProduct);
+    db.SaveChanges();
+    return Results.Ok(deleteProduct);
 });
 
 app.Run();
