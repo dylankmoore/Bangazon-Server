@@ -164,4 +164,59 @@ app.MapDelete("/api/products/{id}", (BangazonDbContext db, int id) =>
     return Results.Ok(deleteProduct);
 });
 
+// GET ORDERS
+app.MapGet("/api/orders", (BangazonDbContext db) =>
+{
+    return db.Orders.ToList();
+});
+
+// GET ORDER BY ID
+app.MapGet("/api/orders/{id}", (BangazonDbContext db, int id) =>
+{
+    var order = db.Orders.SingleOrDefault(u => u.Id == id);
+
+    if (order == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(order);
+});
+
+// CREATE ORDER
+app.MapPost("/api/orders", (BangazonDbContext db, Order order) =>
+{
+    db.Orders.Add(order);
+    db.SaveChanges();
+    return Results.Created($"/api/orders/{order.Id}", order);
+});
+
+// UPDATE ORDER
+app.MapPut("/api/orders/{id}", (BangazonDbContext db, Order order, int id) =>
+{
+    var updateOrder = db.Orders.SingleOrDefault(u => u.Id == id);
+    if (updateOrder == null)
+    {
+        return Results.NotFound();
+    }
+    updateOrder.IsOpen = order.IsOpen;
+    updateOrder.DateCreated = order.DateCreated;
+    db.SaveChanges();
+    return Results.Ok(updateOrder);
+
+});
+
+// DELETE ORDER
+app.MapDelete("/api/orders/{id}", (BangazonDbContext db, int id) =>
+{
+    var deleteOrder = db.Orders.SingleOrDefault(u => u.Id == id);
+    if (deleteOrder == null)
+    {
+        return Results.NotFound();
+    }
+    db.Orders.Remove(deleteOrder);
+    db.SaveChanges();
+    return Results.Ok(deleteOrder);
+});
+
 app.Run();
