@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System.Net.Mail;
+using Bangazon.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,6 +66,12 @@ app.MapGet("/api/users/{id}", (BangazonDbContext db, int id) =>
     }
 
     return Results.Ok(user);
+});
+
+// GET SELLERS
+app.MapGet("/api/users/sellers", (BangazonDbContext db) =>
+{
+    return db.Users.Where(u => u.IsSeller == true).ToList();
 });
 
 // CREATE USERS
@@ -199,6 +206,7 @@ app.MapPut("/api/orders/{id}", (BangazonDbContext db, Order order, int id) =>
     {
         return Results.NotFound();
     }
+    updateOrder.PaymentTypeId = order.PaymentTypeId;
     updateOrder.IsOpen = order.IsOpen;
     updateOrder.DateCreated = order.DateCreated;
     db.SaveChanges();
@@ -217,6 +225,45 @@ app.MapDelete("/api/orders/{id}", (BangazonDbContext db, int id) =>
     db.Orders.Remove(deleteOrder);
     db.SaveChanges();
     return Results.Ok(deleteOrder);
+});
+
+// ADD PRODUCTS TO ORDER
+app.MapPost("/api/orders/addingProduct", (BangazonDbContext db, productOrderDTO newProduct) =>
+{
+    var order = db.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == newProduct.OrderId);
+    if (order == null)
+    {
+        return Results.NotFound();
+    }
+
+    var product = db.Products.Find(newProduct.ProductId);
+    if (product == null)
+    {
+        return Results.NotFound();
+    }
+
+    order.Products.Add(product);
+    db.SaveChanges();
+    return Results.Created($"/orders/addingProduct", newProduct);
+});
+
+// DELETE PRODUCTS FROM ORDER
+app.MapDelete("/orders/{id}/products/{pId}", (BangazonDbContext db, int id, int pId) =>
+{
+    var order = db.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == id);
+    if (order == null)
+    {
+        return Results.NotFound();
+    }
+    var product = db.Products.Find(pId);
+    if (product == null)
+    {
+        return Results.NotFound();
+    }
+
+    order.Products.Remove(product);
+    db.SaveChanges();
+    return Results.Ok();
 });
 
 app.Run();
