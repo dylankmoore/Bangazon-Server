@@ -89,7 +89,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            DateCreated = new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5308),
+                            DateCreated = new DateTime(2024, 2, 26, 19, 27, 7, 764, DateTimeKind.Local).AddTicks(7274),
                             IsOpen = true,
                             PaymentTypeId = 1
                         },
@@ -97,7 +97,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 2,
                             CustomerId = 2,
-                            DateCreated = new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5352),
+                            DateCreated = new DateTime(2024, 2, 26, 19, 27, 7, 764, DateTimeKind.Local).AddTicks(7346),
                             IsOpen = true,
                             PaymentTypeId = 2
                         },
@@ -105,7 +105,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 3,
                             CustomerId = 3,
-                            DateCreated = new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5354),
+                            DateCreated = new DateTime(2024, 2, 26, 19, 27, 7, 764, DateTimeKind.Local).AddTicks(7351),
                             IsOpen = false,
                             PaymentTypeId = 3
                         },
@@ -113,7 +113,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 4,
                             CustomerId = 4,
-                            DateCreated = new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5424),
+                            DateCreated = new DateTime(2024, 2, 26, 19, 27, 7, 764, DateTimeKind.Local).AddTicks(7355),
                             IsOpen = true,
                             PaymentTypeId = 4
                         });
@@ -247,10 +247,6 @@ namespace Bangazon.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FirebaseKey")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -259,6 +255,10 @@ namespace Bangazon.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Uid")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -276,10 +276,10 @@ namespace Bangazon.Migrations
                             Id = 1,
                             Address = "1675 E Altadena Dr, Altadena, CA",
                             Email = "brandonwalsh74@gmail.com",
-                            FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2",
                             FirstName = "Brandon",
                             IsSeller = false,
                             LastName = "Walsh",
+                            Uid = "npAVsfejgPZyg1q0OEKHq6l9zur2",
                             UserName = "branman"
                         },
                         new
@@ -287,10 +287,10 @@ namespace Bangazon.Migrations
                             Id = 2,
                             Address = "3959 Longridge Ave, Sherman Oaks, CA",
                             Email = "kelltaylor@hotmail.com",
-                            FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2",
                             FirstName = "Kelly",
                             IsSeller = true,
                             LastName = "Taylor",
+                            Uid = "fbkey2",
                             UserName = "kells90210"
                         },
                         new
@@ -298,10 +298,10 @@ namespace Bangazon.Migrations
                             Id = 3,
                             Address = "1605 E. Altadena Dr, Altadena, CA",
                             Email = "dmckay74@aol.com",
-                            FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2",
                             FirstName = "Dylan",
                             IsSeller = false,
                             LastName = "McKay",
+                            Uid = "fbkey3",
                             UserName = "dmckay"
                         },
                         new
@@ -309,10 +309,10 @@ namespace Bangazon.Migrations
                             Id = 4,
                             Address = "1060 Brooklawn Dr., Bel Air, CA",
                             Email = "dmartin@gmail.com",
-                            FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2",
                             FirstName = "Donna",
                             IsSeller = false,
                             LastName = "Martin",
+                            Uid = "fbkey4",
                             UserName = "donnaloves2shop"
                         });
                 });

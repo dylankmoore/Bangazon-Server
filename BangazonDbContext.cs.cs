@@ -57,10 +57,10 @@ public class BangazonDbContext : DbContext
         // seed data with USERS
         modelBuilder.Entity<User>().HasData(new User[]
         {
-            new User {Id = 1, FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2", UserName = "branman", FirstName = "Brandon", LastName = "Walsh", Email = "brandonwalsh74@gmail.com", Address = "1675 E Altadena Dr, Altadena, CA", IsSeller = false},
-            new User {Id = 2, FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2", UserName = "kells90210", FirstName = "Kelly", LastName = "Taylor", Email = "kelltaylor@hotmail.com", Address = "3959 Longridge Ave, Sherman Oaks, CA", IsSeller = true},
-            new User {Id = 3, FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2", UserName = "dmckay", FirstName = "Dylan", LastName = "McKay", Email = "dmckay74@aol.com", Address = "1605 E. Altadena Dr, Altadena, CA", IsSeller = false},
-            new User {Id = 4, FirebaseKey = "npAVsfejgPZyg1q0OEKHq6l9zur2", UserName = "donnaloves2shop", FirstName = "Donna", LastName = "Martin", Email = "dmartin@gmail.com", Address = "1060 Brooklawn Dr., Bel Air, CA", IsSeller = false},
+            new User {Id = 1, Uid = "npAVsfejgPZyg1q0OEKHq6l9zur2", UserName = "branman", FirstName = "Brandon", LastName = "Walsh", Email = "brandonwalsh74@gmail.com", Address = "1675 E Altadena Dr, Altadena, CA", IsSeller = false},
+            new User {Id = 2, Uid = "fbkey2", UserName = "kells90210", FirstName = "Kelly", LastName = "Taylor", Email = "kelltaylor@hotmail.com", Address = "3959 Longridge Ave, Sherman Oaks, CA", IsSeller = true},
+            new User {Id = 3, Uid = "fbkey3", UserName = "dmckay", FirstName = "Dylan", LastName = "McKay", Email = "dmckay74@aol.com", Address = "1605 E. Altadena Dr, Altadena, CA", IsSeller = false},
+            new User {Id = 4, Uid = "fbkey4", UserName = "donnaloves2shop", FirstName = "Donna", LastName = "Martin", Email = "dmartin@gmail.com", Address = "1060 Brooklawn Dr., Bel Air, CA", IsSeller = false},
         });
     }
 }
