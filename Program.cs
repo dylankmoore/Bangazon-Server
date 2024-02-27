@@ -5,9 +5,13 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System.Net.Mail;
 using Bangazon.DTOs;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
+builder.Services.AddCors();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,6 +31,20 @@ builder.Services.Configure<JsonOptions>(options =>
 });
 
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+
+// Enable CORS
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -55,8 +73,21 @@ app.MapGet("/api/users", (BangazonDbContext db) =>
     return db.Users.ToList();
 });
 
-// GET USERS BY ID
-app.MapGet("/api/users/{id}", (BangazonDbContext db, int id) =>
+// GET USERS BY UID
+app.MapGet("/api/users/{uid}", (BangazonDbContext db, string uid) =>
+{
+    var user = db.Users.SingleOrDefault(u => u.Uid == uid);
+
+    if (user == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(user);
+});
+
+//GET USERS BY ID
+app.MapGet("/api/users/ids/{id}", (BangazonDbContext db, int id) =>
 {
     var user = db.Users.SingleOrDefault(u => u.Id == id);
 

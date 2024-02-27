@@ -76,7 +76,7 @@ namespace Bangazon.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirebaseKey = table.Column<string>(type: "text", nullable: false),
+                    Uid = table.Column<string>(type: "text", nullable: false),
                     UserName = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
@@ -129,10 +129,10 @@ namespace Bangazon.Migrations
                 columns: new[] { "Id", "CustomerId", "DateCreated", "IsOpen", "PaymentTypeId" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5308), true, 1 },
-                    { 2, 2, new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5352), true, 2 },
-                    { 3, 3, new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5354), false, 3 },
-                    { 4, 4, new DateTime(2024, 2, 21, 22, 37, 0, 69, DateTimeKind.Local).AddTicks(5424), true, 4 }
+                    { 1, 1, new DateTime(2024, 2, 26, 19, 27, 7, 764, DateTimeKind.Local).AddTicks(7274), true, 1 },
+                    { 2, 2, new DateTime(2024, 2, 26, 19, 27, 7, 764, DateTimeKind.Local).AddTicks(7346), true, 2 },
+                    { 3, 3, new DateTime(2024, 2, 26, 19, 27, 7, 764, DateTimeKind.Local).AddTicks(7351), false, 3 },
+                    { 4, 4, new DateTime(2024, 2, 26, 19, 27, 7, 764, DateTimeKind.Local).AddTicks(7355), true, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -159,13 +159,13 @@ namespace Bangazon.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Address", "Email", "FirebaseKey", "FirstName", "IsSeller", "LastName", "UserName" },
+                columns: new[] { "Id", "Address", "Email", "FirstName", "IsSeller", "LastName", "Uid", "UserName" },
                 values: new object[,]
                 {
-                    { 1, "1675 E Altadena Dr, Altadena, CA", "brandonwalsh74@gmail.com", "npAVsfejgPZyg1q0OEKHq6l9zur2", "Brandon", false, "Walsh", "branman" },
-                    { 2, "3959 Longridge Ave, Sherman Oaks, CA", "kelltaylor@hotmail.com", "npAVsfejgPZyg1q0OEKHq6l9zur2", "Kelly", true, "Taylor", "kells90210" },
-                    { 3, "1605 E. Altadena Dr, Altadena, CA", "dmckay74@aol.com", "npAVsfejgPZyg1q0OEKHq6l9zur2", "Dylan", false, "McKay", "dmckay" },
-                    { 4, "1060 Brooklawn Dr., Bel Air, CA", "dmartin@gmail.com", "npAVsfejgPZyg1q0OEKHq6l9zur2", "Donna", false, "Martin", "donnaloves2shop" }
+                    { 1, "1675 E Altadena Dr, Altadena, CA", "brandonwalsh74@gmail.com", "Brandon", false, "Walsh", "npAVsfejgPZyg1q0OEKHq6l9zur2", "branman" },
+                    { 2, "3959 Longridge Ave, Sherman Oaks, CA", "kelltaylor@hotmail.com", "Kelly", true, "Taylor", "fbkey2", "kells90210" },
+                    { 3, "1605 E. Altadena Dr, Altadena, CA", "dmckay74@aol.com", "Dylan", false, "McKay", "fbkey3", "dmckay" },
+                    { 4, "1060 Brooklawn Dr., Bel Air, CA", "dmartin@gmail.com", "Donna", false, "Martin", "fbkey4", "donnaloves2shop" }
                 });
 
             migrationBuilder.CreateIndex(
