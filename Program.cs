@@ -234,7 +234,7 @@ app.MapGet("/api/orders/{id}", (BangazonDbContext db, int id) =>
 {
     var order = db.Orders
       .Include(o => o.Products)
-          .ThenInclude(p => p.Seller)
+      .ThenInclude(p => p.Seller)
       .FirstOrDefault(o => o.Id == id);
 
     if (order == null)
@@ -255,7 +255,6 @@ app.MapPut("/api/orders/{id}/complete", async (BangazonDbContext db, int id, int
         return Results.NotFound("Order not found or already finalized.");
     }
 
-    // Assign the payment type and close the order
     orderToUpdate.PaymentTypeId = paymentTypeId;
     orderToUpdate.IsOpen = false;
     await db.SaveChangesAsync();
@@ -304,11 +303,13 @@ app.MapDelete("/api/cart/{customerId}/products/{productId}", async (BangazonDbCo
 // ADD PRODUCTS TO ORDER/CART //WORKING
 app.MapPost("/api/cart", (BangazonDbContext db, productOrderDTO newProductOrder) =>
 {
-   var order = db.Orders.Include(o => o.Products).FirstOrDefault(o => o.Id == newProductOrder.OrderId && o.CustomerId == newProductOrder.CustomerId && o.IsOpen);
+   var order = db.Orders
+    .Include(o => o.Products)
+    .FirstOrDefault(o => o.Id == newProductOrder.OrderId && o.CustomerId == newProductOrder.CustomerId && o.IsOpen);
 
     if (order == null)
     {
-        return Results.NotFound($"Order not found for CustomerId: {newProductOrder.CustomerId}");
+        return Results.NotFound($"Order not found!");
     }
 
     var product = db.Products.Find(newProductOrder.ProductId);
@@ -369,11 +370,13 @@ app.MapGet("/api/order/history/seller/{sellerId}", async (BangazonDbContext db, 
 // VIEW SHOPPING CART DETAILS //WORKING
 app.MapGet("/api/cart", (BangazonDbContext db, int customerId) =>
 {
-    var order = db.Orders.Include(o => o.Products).FirstOrDefault(o => o.CustomerId == customerId && o.IsOpen);
+    var order = db.Orders
+    .Include(o => o.Products)
+    .FirstOrDefault(o => o.CustomerId == customerId && o.IsOpen);
 
     if (order == null)
     {
-        return Results.NotFound("Cart not found!");
+        return Results.NotFound("Cart is empty!");
     }
 
     var productsInCart = order.Products.ToList();
@@ -395,7 +398,8 @@ app.MapGet("/api/sellers/search", (BangazonDbContext db, string searchQuery = nu
 
     if (!string.IsNullOrEmpty(searchQuery))
     {
-        query = query.Where(u => u.FirstName.ToLower().Contains(searchQuery.ToLower()) || u.LastName.ToLower().Contains(searchQuery.ToLower()));
+        query = query
+        .Where(u => u.FirstName.ToLower().Contains(searchQuery.ToLower()) || u.LastName.ToLower().Contains(searchQuery.ToLower()));
     }
 
     var matchingSellers = query.ToList();
