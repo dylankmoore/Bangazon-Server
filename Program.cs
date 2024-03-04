@@ -167,38 +167,31 @@ app.MapDelete("/api/users/{id}", (BangazonDbContext db, int id) =>
 // GET PRODUCTS //WORKING
 app.MapGet("/api/products", (BangazonDbContext db, bool latest = false) =>
 {
-    IQueryable<Product> query = db.Products
-        .Include(p => p.Seller)
-        .Include(p => p.Category);
+    IQueryable<Product> query = db.Products.Include(p => p.Category);
 
     if (latest)
     {
-        query = query.OrderByDescending(p => p.Id).Take(20);
+        var latestProducts = query.OrderByDescending(p => p.Id).Take(20)
+            .Select(p => new
+            {
+                Product = p,
+                Category = new { p.Category.Id, p.Category.Name }
+            }).ToList();
+
+        return Results.Ok(latestProducts);
     }
-
-    var products = query.ToList().Select(p => new
+    else
     {
-        p.Id,
-        p.Name,
-        p.Description,
-        p.ImageURL,
-        p.Price,
-        Category = new { p.Category.Id, p.Category.Name },
-        Seller = new
-        {
-            p.Seller.Id,
-            p.Seller.UserName,
-            p.Seller.FirstName,
-            p.Seller.LastName,
-            p.Seller.Email,
-            p.Seller.Address,
-            p.Seller.IsSeller
-        }
-    }).ToList();
+        var allProducts = query
+            .Select(p => new
+            {
+                Product = p,
+                Category = new { p.Category.Id, p.Category.Name }
+            }).ToList();
 
-    return Results.Ok(products);
+        return Results.Ok(allProducts);
+    }
 });
-
 
 // GET PRODUCTS BY ID //WORKING
 app.MapGet("/api/products/{id}", (BangazonDbContext db, int id) =>
