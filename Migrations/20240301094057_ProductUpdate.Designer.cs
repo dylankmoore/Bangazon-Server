@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(BangazonDbContext))]
-    partial class BangazonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240301094057_ProductUpdate")]
+    partial class ProductUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +96,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 1,
                             CustomerId = 1,
-                            DateCreated = new DateTime(2024, 3, 4, 0, 14, 9, 433, DateTimeKind.Local).AddTicks(8969),
+                            DateCreated = new DateTime(2024, 3, 1, 3, 40, 56, 743, DateTimeKind.Local).AddTicks(9533),
                             IsOpen = true,
                             PaymentTypeId = 1
                         },
@@ -102,7 +104,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 2,
                             CustomerId = 2,
-                            DateCreated = new DateTime(2024, 3, 4, 0, 14, 9, 433, DateTimeKind.Local).AddTicks(9038),
+                            DateCreated = new DateTime(2024, 3, 1, 3, 40, 56, 743, DateTimeKind.Local).AddTicks(9612),
                             IsOpen = true,
                             PaymentTypeId = 2
                         },
@@ -110,7 +112,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 3,
                             CustomerId = 3,
-                            DateCreated = new DateTime(2024, 3, 4, 0, 14, 9, 433, DateTimeKind.Local).AddTicks(9043),
+                            DateCreated = new DateTime(2024, 3, 1, 3, 40, 56, 743, DateTimeKind.Local).AddTicks(9617),
                             IsOpen = false,
                             PaymentTypeId = 3
                         },
@@ -118,7 +120,7 @@ namespace Bangazon.Migrations
                         {
                             Id = 4,
                             CustomerId = 4,
-                            DateCreated = new DateTime(2024, 3, 4, 0, 14, 9, 433, DateTimeKind.Local).AddTicks(9048),
+                            DateCreated = new DateTime(2024, 3, 1, 3, 40, 56, 743, DateTimeKind.Local).AddTicks(9621),
                             IsOpen = true,
                             PaymentTypeId = 4
                         });
@@ -232,10 +234,10 @@ namespace Bangazon.Migrations
                         {
                             Id = 4,
                             CategoryId = 4,
-                            Description = "Froot Loop cereal bowl as a fun candle!",
-                            ImageURL = "https://m.media-amazon.com/images/I/71kVczcRfdL._AC_SL1500_.jpg",
-                            Name = "Cereal Bowl Candle",
-                            Price = 35m,
+                            Description = "Multi-colored cutting board",
+                            ImageURL = "https://fredericksandmae.com/cdn/shop/products/0511_1296x.jpg?v=1631229005",
+                            Name = "Confetti Cutting Board",
+                            Price = 70m,
                             SellerId = 2
                         },
                         new
@@ -261,7 +263,7 @@ namespace Bangazon.Migrations
                         new
                         {
                             Id = 7,
-                            CategoryId = 3,
+                            CategoryId = 1,
                             Description = "Board Game",
                             ImageURL = "https://m.media-amazon.com/images/I/71Jr69W+MpL._AC_SL1500_.jpg",
                             Name = "Scrabble",
