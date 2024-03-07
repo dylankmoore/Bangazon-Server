@@ -9,7 +9,7 @@ Bangazon E-commerce Platform aims to provide a comprehensive online shopping exp
 ## Features <!-- List your app features using bullets! Do NOT use a paragraph. No one will read that! -->
 Our backend API for Bangazon has many features where:
 - Users can register or sign in.
-- Customers can shop for products/details, add them to their cart, check out, view order history, search items and sellers, view seller's stores.
+- Customers can shop for products/view product details, add items to their cart, check out, view order history, search items and sellers, view seller's stores.
 - Sellers can view orders with their products on them, view their seller dashboard, past sales, search products and sellers.
 
 ## Data Design
